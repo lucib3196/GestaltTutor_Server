@@ -53,7 +53,8 @@ class LectureDocumentLoader(BaseLoader):
             metadata_path = lecture_dir / "output.json"
             if metadata_path.exists():
                 raw = json.loads(metadata_path.read_text(encoding="utf-8"))
-                lecture_metadata = raw.get("lecture_analysis", {})
+                lecture_metadata = raw.get("lecture_summary", {})
+               
             # -------------------------
             # Yield document
             # -------------------------
@@ -80,4 +81,4 @@ if __name__ == "__main__":
             "professor": "Sundar",
         },
     )
-    print(loader.load_and_split()[0])
+    print(loader.load()[0])

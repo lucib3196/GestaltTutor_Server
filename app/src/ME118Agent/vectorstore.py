@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     from langchain_openai import OpenAIEmbeddings
 
-    from ME135Agent.document_loader import LectureDocumentLoader
+    from ME118Agent.document_loader import LectureDocumentLoader
 
     loader = LectureDocumentLoader(
         root=r"assets/ME118Lecture",
