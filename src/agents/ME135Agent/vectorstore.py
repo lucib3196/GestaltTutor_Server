@@ -1,10 +1,12 @@
-from langchain_astradb import AstraDBVectorStore
-from langchain_openai import OpenAIEmbeddings
-from dotenv import load_dotenv
 import os
+from langchain_astradb import AstraDBVectorStore
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from src.settings import get_settings
+from document_loaders.lecture_document_loader import LectureDocumentLoader
 
-load_dotenv()
-embeddings = OpenAIEmbeddings()
+settings = get_settings()
+embeddings = GoogleGenerativeAIEmbeddings(model=settings.embedding_model)
 vector_store = AstraDBVectorStore(
     collection_name="me135_lecture",
     embedding=embeddings,
@@ -14,16 +16,9 @@ vector_store = AstraDBVectorStore(
 
 if __name__ == "__main__":
 
-    from dotenv import load_dotenv
-    from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-    from langchain_openai import OpenAIEmbeddings
-
-    from ME135Agent.document_loader import LectureDocumentLoader
-
     loader = LectureDocumentLoader(
         root=r"assets/ME135Lecture",
-        metadata={"course": "ME135 Transport Phenomena", "professor": "Sundar"},
+        metadata={"course": "ME135_Transport_Phenomena", "professor": "Sundar"},
     )
     docs = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
